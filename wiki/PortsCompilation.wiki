@@ -1,38 +1,38 @@
 #labels mdconfig,ports
-#Compilando pelo ports na build#
+=Compilando pelo ports na build=
 
-Esse tutorial serve apenas caso voce esteja usando uma maquina de build para compilar.
+    Esse tutorial serve apenas caso voce esteja usando uma maquina de build para compilar.
 
-Para compilar pelo ports, algumas variaveis precisam ser passadas para nao conflitar com o sistema da maquina de build.
+   Para compilar pelo ports, algumas variaveis precisam ser passadas para nao conflitar com o sistema da maquina de build.
 
-Compilando pelo ports dentro da imagem gerada na maquina de build
+   Compilando pelo ports dentro da imagem gerada na maquina de build
 
-Todos os comandos sao rodados como root!!
+=Todos os comandos sao rodados como root!!=
 
-Apos gerar a imagem, basta monta-la como memory disk:
+   Apos gerar a imagem, basta monta-la como memory disk:
 
-mdconfig -a -t vnode -u 0 -t tinybsd.bin
+#mdconfig -a -t vnode -u 0 -t tinybsd.bin
 
 Isso ira gerar o dev md?[a]:
 
-ls /dev/md*
+#ls /dev/md*
 
 /dev/md? /dev/md? /dev/md? 
 
-Agora basta monta-lo:
+   Agora basta monta-lo:
 
-mount /dev/md? /media/
+#mount /dev/md? /media/
 
-ls /media/
+#ls /media/
 
 .cshrc COPYRIGHT dev libexec proc sbin var .profile bin etc media rescue tmp .snap boot lib mnt root usr
 
-Para instalar, entrar no diretorio do pors desejado:
+   Para instalar, entrar no diretorio do pors desejado:
 
-cd /usr/ports/x11/xorg-minimal
+#cd /usr/ports/x11/xorg-minimal
 
-make clean
+#make clean
 
-make install clean PREFIX=/media/usr/local LOCALBASE=/media/usr/local FORCE_PKG_REGISTER=1 BATCH=1 LD_LIBRARY_PATH=/media/lib
+#make install clean PREFIX=/media/usr/local LOCALBASE=/media/usr/local FORCE_PKG_REGISTER=1 BATCH=1 LD_LIBRARY_PATH=/media/lib
 
-As flags PREFIX e LOCALBASE servem para dizer ao make que sera usado outro diretorio para a instalacao. FORCE_PKG_REGISTER serve para nao conflitar com os pacotes instalados na maquina local e BATCH=1 serve para assumir todas as opcoes como yes. LD_LIBRARY_PATH tem como objetivo fazer o make da ldconfig -m no /media/lib e nao no /lib.
+   
