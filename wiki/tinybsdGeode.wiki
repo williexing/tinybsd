@@ -1,0 +1,60 @@
+#labels geode
+Objetivo:
+* Criar uma imagem do FreeBSD compilado para arquitetura Geode usando 1gb de espaco em disco.
+
+System: 
+* FreeBSD  8.2-RELEASE
+     Obs: No FreeBSD 8.2, o Tinybsd ja faz parte do sistema e esta dentro do /usr/src/tools/tools/tinybsd. Nas versoes anteriores do FreeBSD, talvez seja preciso instalar atraves do ports.
+
+Requisitos:
+
+* De preferencia o diretorio full do /usr/src/
+* build tools (gmake, gcc,etc)
+
+
+Passo-a-passo:
+
+* Atualizando o /usr/src
+# #pkg_add -rv cvsup-without-gui && rehash 
+
+#cvsup -g -L2 /usr/share/examples/cvsup/stable-supfile -h cvsup3.br.freebsd.org
+
+* Verifique a existencia do diretorio /usr/src/tools/tools/tinybsd
+
+# #ls -la /usr/src/tools/tools/tinybsd/
+total 32
+drwxr-xr-x   3 root  wheel    512 Oct  7 12:32 .
+drwxr-xr-x  61 root  wheel   1536 Oct  7 12:32 ..
+-rw-r--r--   1 root  wheel   1478 Aug  3  2009 CHANGES
+-rw-r--r--   1 root  wheel   9586 Aug  3  2009 README
+drwxr-xr-x   9 root  wheel    512 Oct  7 12:32 conf
+-rwxr-xr-x   1 root  wheel  13201 Oct 25  2010 tinybsd
+
+  Dentro do diretorio conf, existem algumas configuracoes ja feitas, usaremos a default:
+
+# #ls -la /usr/src/tools/tools/tinybsd/conf/default/
+total 16
+drwxr-xr-x  3 root  wheel   512 Oct  7 12:32 .
+drwxr-xr-x  9 root  wheel   512 Oct  7 12:32 ..
+-rw-r--r--  1 root  wheel  2971 Oct 10 07:05 TINYBSD
+drwxr-xr-x  2 root  wheel   512 Oct  7 12:32 etc
+-rw-r--r--  1 root  wheel  3926 Aug  3  2009 tinybsd.basefiles
+-rw-r--r--  1 root  wheel   435 Aug  3  2009 tinybsd.ports
+
+  Dentro do arquivo TINYBSD esta a configuracao do kernel. Dentro do etc alguns arquivos de configuracoes. O arquivo tinybsd.basefiles sao todos os arquivos que ficarao na imagem. O mesmo serve para o tinybsd.ports.
+
+  O kernel e as configuracoes estao na sessao files.
+
+  Apos verificar as configuracoes, rodar o script, a imagem gerada sera tinybsd.bin:
+
+# #cd /usr/src/tools/tools/tinybsd && ./tinybsd
+
+Montaremos a imagem como memorydisk:
+
+# #cd /usr/src/tools/tools/tinybsd 
+
+# #mdconfig -a -t vnode -f tinybsd.bin -u 0
+
+# #mount /dev/md0a /media
+
+
