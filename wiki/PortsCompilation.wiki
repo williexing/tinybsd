@@ -1,5 +1,5 @@
 #labels mdconfig,ports
-Compilando pelo ports na build
+#Compilando pelo ports na build
 
 Esse tutorial serve apenas caso voce esteja usando uma maquina de build para compilar.
 
