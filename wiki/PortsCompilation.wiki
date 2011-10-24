@@ -1,25 +1,22 @@
 #labels mdconfig,ports
-=Compilando pelo ports na build=
+=Using ports to compile in our image=
 
-    Esse tutorial serve apenas caso voce esteja usando uma maquina de build para compilar.
+    This tutorial explains how to use  ports to install inside your image. We suppose you have a large image. We suppose too you are using a build server to make a better compilation performance.
+    If you have things installed in your build system using ports, its better you clean all work directories.
 
-   Para compilar pelo ports, algumas variaveis precisam ser passadas para nao conflitar com o sistema da maquina de build.
+#cd /usr/ports && make clean 
 
-   Compilando pelo ports dentro da imagem gerada na maquina de build
-
-=Todos os comandos sao rodados como root!!=
-
-   Apos gerar a imagem, basta monta-la como memory disk:
-
+   Logged has root, mount the image:
+  
 #mdconfig -a -t vnode -u 0 -t tinybsd.bin
 
-Isso ira gerar o dev md?[a]:
+This will create a device md?[a]:
 
 #ls /dev/md*
 
 /dev/md? /dev/md? /dev/md? 
 
-   Agora basta monta-lo:
+   Now mount:
 
 #mount /dev/md? /media/
 
@@ -27,7 +24,7 @@ Isso ira gerar o dev md?[a]:
 
 .cshrc COPYRIGHT dev libexec proc sbin var .profile bin etc media rescue tmp .snap boot lib mnt root usr
 
-   Para instalar, entrar no diretorio do pors desejado:
+   To install:
 
 #cd /usr/ports/x11/xorg-minimal
 
