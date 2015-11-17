@@ -1,0 +1,33 @@
+# Using ports to compile in our image #
+
+> This tutorial explains how to use  ports to install inside your image. We suppose you have a large image. We suppose too you are using a build server to make a better compilation performance.
+> If you have things installed in your build system using ports, its better you clean all work directories.
+
+#cd /usr/ports && make clean
+
+> Logged has root, mount the image:
+
+#mdconfig -a -t vnode -u 0 -t tinybsd.bin
+
+This will create a device md?[a](a.md):
+
+#ls /dev/md
+
+/dev/md? /dev/md? /dev/md?
+
+> Now mount:
+
+#mount /dev/md? /media/
+
+#ls /media/
+
+.cshrc COPYRIGHT dev libexec proc sbin var .profile bin etc media rescue tmp .snap boot lib mnt root usr
+
+> To install:
+
+#cd /usr/ports/x11/xorg-minimal
+
+#make clean
+
+#make install clean PREFIX=/media/usr/local LOCALBASE=/media/usr/local FORCE\_PKG\_REGISTER=1 BATCH=1 LD\_LIBRARY\_PATH=/media/lib
+

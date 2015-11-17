@@ -1,0 +1,52 @@
+With this paper you will learn how make a tinybsd image in a build server running freebsd. Fist at all: you must see some proprieties from your harddisk. You can use the diskinfo to get this information. Here we have the objective to minimize the disk usage, so we must use the default configuration.
+
+**System:** FreeBSD 8.2-RELEASE
+
+**Steps:**
+
+> Its a good ideia update your system, fist because we want a secure system, second because we want a secure system and third because we want a secure system.
+
+> _cvsup -g -L2 /usr/share/examples/cvsup/stable-supfile -h cvsup3.br.freebsd.org_
+
+> Take a look  inside the tinybsd directory:
+
+> _ls -la /usr/src/tools/tools/tinybsd/
+> total 32
+> drwxr-xr-x 3 root wheel 512 Oct 7 12:32 .
+> drwxr-xr-x 61 root wheel 1536 Oct 7 12:32 ..
+> -rw-r--r-- 1 root wheel 1478 Aug 3 2009 CHANGES
+> -rw-r--r-- 1 root wheel 9586 Aug 3 2009 README
+> drwxr-xr-x 9 root wheel 512 Oct 7 12:32 conf
+> -rwxr-xr-x 1 root wheel 13201 Oct 25 2010 tinybsd_
+
+> Inside the conf directory, we have some pre-build configurations. We will use the minimal configuration.
+
+> _ls -la /usr/src/tools/tools/tinybsd/conf/default/
+> total 16 drwxr-xr-x 3 root wheel 512 Oct 7 12:32 .
+> drwxr-xr-x 9 root wheel 512 Oct 7 12:32 ..
+> -rw-r--r-- 1 root wheel 2971 Oct 10 07:05 TINYBSD
+> drwxr-xr-x 2 root wheel 512 Oct 7 12:32 etc
+> -rw-r--r-- 1 root wheel 3926 Aug 3 2009 tinybsd.basefiles
+> -rw-r--r-- 1 root wheel 435 Aug 3 2009 tinybsd.ports_
+
+> Inside TINYBSD we have the kernel configuration. Edit and put your drivers and stuffs. After, edit tynibsd.basefiles to put some binaries.
+
+> Its a good idea copy the actual kernel configuration. You can do this with:
+
+> cp /sys/i386/conf/GENERIC /usr/src/tools/tools/tinybsd/conf/minimal/TINYBSD
+
+
+> Now:
+
+> cd /usr/src/tools/tools/tinybsd && ./tinybsd
+
+
+> To mount the image:
+> mdconfig -a -t vnode -f tinybsd.bin -u 0
+
+> mount /dev/md0a /media
+
+> To umount the image:
+> mdconfig -d -u 0
+> umount /media
+
